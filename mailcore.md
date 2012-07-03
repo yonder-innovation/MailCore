@@ -74,7 +74,7 @@ Here are a list of major changes:
 
 ## Documentation [docs]
 
-For now read the comments in the header files, the methods are pretty heavily commented. Actual docs are coming soon.
+Take a look at the [API docs](api/index.html).
 
 ## Apps Using MailCore [apps]
 
