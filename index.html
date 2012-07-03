@@ -74,13 +74,20 @@ git submodule update --init</code></pre>
    CFNetwork.framework</code></pre>
 
 <p><img src="images/libraries.png" alt="libraries" /><br/>
-4. Under you app&#8217;s target switch to Build Settings. Locate &#8220;Header Search Paths&#8221; in the Build Settings and add <code>../MailCore/include</code> Note: This assumes that the MailCore project has been checked out into a folder next to your project.<br/>
+4. Under your app&#8217;s target, switch to Build Settings. Locate &#8220;Header Search Paths&#8221; in the Build Settings and add <code>../MailCore/include</code> Note: This assumes that the MailCore project has been checked out into a folder next to your project.<br/>
 <img src="images/buildsettings.png" alt="buildsettings" /><br/>
 5. You are now ready to use MailCore. To use MailCore add <code>#import &lt;MailCore/MailCore.h&gt;</code> to the top of your Objective-C files. </p>
 
 <h2 id="macadding">Adding MailCore to Your Mac Project</h2>
 
-<p>TODO </p>
+<ol>
+<li>First checkout the latest code and make sure you get the required submodules</li>
+<li>Locate MailCore.xcodeproj and add it to your project as a subproject. You can do this by dragging the Mailcore.xcodeproj file into your Xcode project.</li>
+<li>Navigate to your app&#8217;s target and switch to your app&#8217;s Build Phases. Once in Build Phases expand &#8220;Link Binary With Libraries&#8221; and click the + button. From there add MailCore.framework.</li>
+<li>While still under Build Phases click &#8220;Add Build Phase&#8221; in the lower right and select &#8220;Add Copy Files&#8221;. A new copy files phase will be added, make sure the destination is set to &#8220;Frameworks&#8221;. Now add MailCore.framework to that copy files phase by using the + button.</li>
+<li>Under your app&#8217;s target, switch to Build Settings. Locate &#8220;Header Search Paths&#8221; in the Build Settings and add <code>../MailCore/include</code> Note: This assumes that the MailCore project has been checked out into a folder next to your project.</li>
+<li>You are now ready to use MailCore. To use MailCore add <code>#import &lt;MailCore/MailCore.h&gt;</code> to the top of your Objective-C files.</li>
+</ol>
 
 <h2 id="migrating">Migrating to Version 1.0</h2>
 
@@ -101,7 +108,7 @@ git submodule update --init</code></pre>
 
 <h2 id="docs">Documentation</h2>
 
-<p>For now read the comments in the header files, the methods are pretty heavily commented. Actual docs are coming soon. </p>
+<p>Take a look at the <a href="api/index.html">API docs</a>. </p>
 
 <h2 id="apps">Apps Using MailCore</h2>
 
@@ -125,7 +132,7 @@ git submodule update --init</code></pre>
 
 <h2 id="contact">Contact</h2>
 
-<p>If you have any questions please don&#8217;t hestitate to contact me at <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#109;&#114;&#x6f;&#110;&#x67;&#x65;&#64;&#109;&#x72;&#111;&#110;&#103;&#101;&#x2e;&#x63;&#x6f;&#109;">&#x6d;&#x72;&#111;&#110;&#103;&#101;&#64;&#x6d;&#114;&#x6f;&#x6e;&#x67;&#101;&#x2e;&#x63;&#111;&#x6d;</a> or on Twitter at <a href="http:www.twitter.com/mronge">@mronge</a>. </p>
+<p>If you have any questions please don&#8217;t hestitate to contact me at <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#x72;&#111;&#x6e;&#103;&#x65;&#x40;&#109;&#x72;&#x6f;&#110;&#x67;&#x65;&#x2e;&#99;&#111;&#109;">&#x6d;&#x72;&#111;&#x6e;&#x67;&#101;&#x40;&#x6d;&#x72;&#x6f;&#x6e;&#103;&#101;&#46;&#x63;&#111;&#x6d;</a> or on Twitter at <a href="http:www.twitter.com/mronge">@mronge</a>. </p>
 
 <p>Thanks, </p>
 
