@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>mailcore</title>
+  <title>gettingstarted</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
 /* 
@@ -27,128 +27,81 @@ html,body{color:black}*{margin:0;padding:0}body{font:13.34px helvetica,arial,fre
 </head>
 <body class="normal">
   <div id="wrapper">
-      <p><a href="https://github.com/mronge/MailCore"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a></p>
+      <h1 id="gettingstarted">Getting Started</h1>
 
-<h1 id="mailcore">MailCore</h1>
+<p>This provides a brief overview of the MailCore API and how it is structured. </p>
 
-<p>MailCore is a Mac/iOS framework for working with the e-mail protocols IMAP and SMTP </p>
+<h2 id="sendinge-mail">Sending E-mail</h2>
 
-<hr />
+<p>Sending e-mail with MailCore is very easy, it takes care of all the details like MIME encoding, and the SMTP protocol. First, start by creating a <code>CTCoreMessage</code> instance. Then set the subject, body, from, and atleast one to, bcc, or cc recipient. One detail to note is that the to, cc, bcc attributes take an NSSet of <code>CTCoreAddress</code> recipients.</p>
 
-<h2 id="summary">Summary</h2>
+<pre><code>  CTCoreMessage *testMsg = [[CTCoreMessage alloc] init];
+  [testMsg setTo:[NSSet setWithObject:[CTCoreAddress addressWithName:@&quot;Monkey&quot; email:@&quot;monkey@monkey.com&quot;]]];
+  [testMsg setFrom:[NSSet setWithObject:[CTCoreAddress addressWithName:@&quot;Someone&quot; email:@&quot;test@someone.com&quot;]]];
+  [testMsg setBody:@&quot;This is a test message!&quot;];
+  [testMsg setSubject:@&quot;This is a subject&quot;];
+</code></pre>
 
-<ul>
-<li><a href="#whatis">What is MailCore?</a></li>
-<li><a href="#gettingcode">Getting the Code</a></li>
-<li><a href="#iosadding">Adding MailCore to Your iOS Project</a></li>
-<li><a href="#macadding">Adding MailCore to Your Mac Project</a></li>
-<li><a href="#migrating">Migrating to Version 1.0</a></li>
-<li><a href="#docs">Documentation</a></li>
-<li><a href="#mailinglist">Mailing List</a></li>
-<li><a href="#apps">Apps Using MailCore</a></li>
-<li><a href="#consulting">Consulting</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
+<p>Once the message attributes have been set, all that is left is sending the message using <code>CTSMTPConnection</code>:</p>
 
-<hr />
+<pre><code>NSError *error;
+BOOL success = [CTSMTPConnection sendMessage:testMsg server:@&quot;mail.test.com&quot; username:@&quot;test&quot; password:@&quot;test&quot; port:25 useTLS:YES shouldAuth:YES error:&amp;error];
+if (!success) {
+    // Present the error
+}  
+</code></pre>
 
-<h2 id="whatis">What is MailCore?</h2>
+<p>That&#8217;s all, let me know if you have any problems/suggestions/recommendations </p>
 
-<p>MailCore is a Mac and iOS framework designed to ease the pain of dealing with e-mail protocols. MailCore makes the process of sending e-mail easy by hiding the nasty details like MIME composition from you. Instead, there is a nice interface for composing messages and then there is a single method required to send the message. Checking e-mail on an IMAP server is a more complex beast, but MailCore makes the job much simpler but presenting everything as a set of abstract objects like Messages, Folders and Accounts. </p>
+<h2 id="workingwithimap">Working with IMAP</h2>
 
-<h2 id="gettingcode">Getting the Code</h2>
+<p>Working with IMAP through MailCore is quite easy. First you need to instantiate a <code>CTCoreAccount</code> object and establish a connection like so:</p>
 
-<p>The best way to get MailCore is to clone directly from <a href="http://www.github.com/mronge/MailCore/">GitHub</a>. The master branch is under active development but it is still the recommended place to start. Eventually a stable version will be tagged 1.0, but for now work off master. </p>
+<pre><code>CTCoreAccount *account = [[CTCoreAccount alloc] init];
+BOOL success = [account connectToServer:@&quot;mail.theronge.com&quot; port:143 connectionType:CTConnectionTypePlain authType:CTImapAuthTypePlain login:@&quot;test&quot; password:@&quot;none&quot;];
+if (!success) {
+    // Display the error contained in account.lastError
+}  
+</code></pre>
 
-<pre><code class="bash">git clone https://github.com/mronge/MailCore.git  
-cd MailCore/  
-git submodule update --init</code></pre>
+<p>If by any chance it fails to make a connection NO will be returned. Check the account&#8217;s lastError property to get the exact error. <strong>Important: lastError is frequently used, other MailCore objects also use it to store the most recent error.</strong> Now that we have a connection to the server we can go ahead and get a list of folders.</p>
 
-<h2 id="iosadding">Adding MailCore to Your iOS Project</h2>
+<pre><code>NSSet *subFolders = [account subscribedFolders];  
+</code></pre>
 
-<ol>
-<li>First checkout the latest code and make sure you get the required submodules</li>
-<li>Locate MailCore.xcodeproj and add it to your project as a subproject. You can do this by dragging the Mailcore.xcodeproj file into your Xcode project.<br/>
-<img src="images/subproject.png" alt="subproject" /></li>
-<li>Navigate to your app&#8217;s target and switch to your app&#8217;s Build Phases. Once in Build Phases expand &#8220;Link Binary With Libraries&#8221; and click the + button. And add these libraries:</li>
-</ol>
+<p>If we take a look at the resulting NSSet, we see that a set of NSStrings with folder path&#8217;s have been returned.</p>
 
-<pre><code class="libmailcore.a">   libssl.a  
-   libsasl2.a  
-   libcrypto.a  
-   libiconv.dylib  
-   CFNetwork.framework</code></pre>
+<pre><code>&lt;NSCFSet: 0x309d60&gt; (INBOX.Test.Test22, INBOX, INBOX.TheArchive, INBOX.Test, INBOX.Trash)  
+</code></pre>
 
-<p><img src="images/libraries.png" alt="libraries" /><br/>
-4. Under your app&#8217;s target, switch to Build Settings. Locate &#8220;Header Search Paths&#8221; in the Build Settings and add <code>../MailCore/include</code> Note: This assumes that the MailCore project has been checked out into a folder next to your project.<br/>
-<img src="images/buildsettings.png" alt="buildsettings" /><br/>
-5. You are now ready to use MailCore. To use MailCore add <code>#import &lt;MailCore/MailCore.h&gt;</code> to the top of your Objective-C files. </p>
+<p>We can use one of those strings to create a <code>CTCoreFolder</code> object, for example this sets up a connection to the INBOX on the server:</p>
 
-<h2 id="macadding">Adding MailCore to Your Mac Project</h2>
+<pre><code>CTCoreFolder *inbox = [account folderWithPath:@&quot;INBOX&quot;];  
+</code></pre>
 
-<ol>
-<li>First checkout the latest code and make sure you get the required submodules</li>
-<li>Locate MailCore.xcodeproj and add it to your project as a subproject. You can do this by dragging the Mailcore.xcodeproj file into your Xcode project.</li>
-<li>Navigate to your app&#8217;s target and switch to your app&#8217;s Build Phases. Once in Build Phases expand &#8220;Link Binary With Libraries&#8221; and click the + button. From there add MailCore.framework.</li>
-<li>While still under Build Phases click &#8220;Add Build Phase&#8221; in the lower right and select &#8220;Add Copy Files&#8221;. A new copy files phase will be added, make sure the destination is set to &#8220;Frameworks&#8221;. Now add MailCore.framework to that copy files phase by using the + button.</li>
-<li>Under your app&#8217;s target, switch to Build Settings. Locate &#8220;Header Search Paths&#8221; in the Build Settings and add <code>../MailCore/include</code> Note: This assumes that the MailCore project has been checked out into a folder next to your project.</li>
-<li>You are now ready to use MailCore. To use MailCore add <code>#import &lt;MailCore/MailCore.h&gt;</code> to the top of your Objective-C files.</li>
-</ol>
+<p>Now that we have a connection to a folder we can start to do more interesting things, like we can get an array of the messages in the particular folder, or we can delete the folder, or remove the folder from the subscribed list, check the <code>CTCoreFolder</code> for more information. For this particular example I am going to get a list of the messages in the INBOX.</p>
 
-<h2 id="migrating">Migrating to Version 1.0</h2>
+<pre><code>NSArray *messages = [self.folder messagesFromSequenceNumber:1 to:0 withFetchAttributes:CTFetchAttrEnvelope];  
+</code></pre>
 
-<p>The latest version of MailCore is no longer backwards compatible with earlier versions. I tried to keep backwards compatibility, but it became too complex, sorry :( </p>
+<p>This is one of two ways to fetch messages. The other is by UID:</p>
 
-<p>The biggest change is that exceptions are no longer used. Instead each method either returns a BOOL or an object that can be checked for success. If an error occurs each object has a <code>- (NSError *)lastError</code> method that can be consulted. </p>
+<pre><code>NSArray *messages = [self.folder messagesFromUID:1 to:0 withFetchAttributes:CTFetchAttrEnvelope];
+</code></pre>
 
-<p>Here are a list of major changes:</p>
+<p>Both methods do the exact same thing, except one uses sequence numbers to determine which messages to fetch while the other uses UIDs.</p>
 
-<ul>
-<li>The method <code>- (int)fetchBody</code> has been renamed to <code>- (BOOL)fetchBodyStructure</code></li>
-<li>The methods <code>messageObjectsFromIndex:toIndex:</code> and <code>messageListWithFetchAttributes:</code> have both been removed. They&#8217;ve been replaced by the new and improved <code>messagesFromSequenceNumber:to:withFetchAttributes:</code> and <code>messagesFromUID:to:withFetchAttributes:</code>. Please see the header file CTCoreFolder.m for details.</li>
-<li>NSException is no longer used, instead NSError is used.</li>
-<li>A CTCoreMessage&#8217;s to, from, sender, bcc, cc, and subject values are nil when they have not been downloaded or message doesn&#8217;t have them</li>
-<li>Message UIDs are now NSUIntegers instead of NSStrings</li>
-<li><code>- (BOOL)isUIDValid:(NSString *)uid</code> has been removed. Instead check your uid validity value manually</li>
-</ul>
+<p>Both UIDs and sequence numbers start with 1. A 0 as the to: argument indicates that the fetch should go to the end of the message list. A sequence number only identifies a particular message for the duration of the connection. You are guaranteed that the sequence numbers are consecutive. So if the folder has 100 messages you know the sequence numbers start at 1 and go up to 100. UIDs are guaranteed unique for that folder, even across connections, so they are useful for syncing. They are guaranteed to be increasing, but not consecutive. So if you have a folder with 100 messages the first UID might be 5, followed by 20, then 27, and then 103 to 200. </p>
 
-<h2 id="docs">Documentation</h2>
+<p>You&#8217;ll also note that each method takes fetch attributes, that controls what is retrieved from the server. See the API documentation for more information on available fetch attributes. </p>
 
-<p>Begin with the <a href="gettingstarted.html">Getting Started Guide</a> and then take a look at the <a href="api/index.html">API docs</a>. </p>
+<p>Now that we have a message list we can grab the first message and download the message body:</p>
 
-<h2 id="mailinglist">Mailing List</h2>
+<pre><code>CTCoreMessage *msg = [messages objectAtIndex:0];
+NSString *body = [msg bodyPreferringPlainText];
+</code></pre>
 
-<p>There is a low traffic mailing list hosted on <a href="http://librelist.com/">Librelist</a>. </p>
-
-<p>To join send an email to <a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x6d;&#97;&#105;&#108;&#99;&#111;&#x72;&#x65;&#x40;&#108;&#105;&#98;&#x72;&#101;&#x6c;&#x69;&#115;&#116;&#x2e;&#99;&#x6f;&#x6d;">&#x6d;&#97;&#x69;&#x6c;&#x63;&#111;&#x72;&#x65;&#64;&#x6c;&#105;&#98;&#x72;&#x65;&#x6c;&#105;&#x73;&#x74;&#46;&#99;&#111;&#x6d;</a> and reply to the confirmation e-mail. To unsubscribe at anytime send an e-mail to <a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#x6d;&#97;&#105;&#108;&#99;&#111;&#114;&#101;&#x2d;&#x75;&#x6e;&#x73;&#117;&#98;&#115;&#x63;&#x72;&#x69;&#98;&#101;&#x40;&#108;&#x69;&#x62;&#x72;&#x65;&#108;&#x69;&#x73;&#x74;&#x2e;&#x63;&#x6f;&#x6d;">&#x6d;&#97;&#105;&#108;&#x63;&#x6f;&#114;&#101;&#x2d;&#117;&#110;&#x73;&#x75;&#x62;&#x73;&#x63;&#x72;&#105;&#x62;&#101;&#64;&#108;&#105;&#x62;&#x72;&#x65;&#x6c;&#x69;&#x73;&#x74;&#46;&#99;&#111;&#109;</a>. </p>
-
-<h2 id="apps">Apps Using MailCore</h2>
-
-<p>If you&#8217;d like your app listed here, please get in touch.</p>
-
-<ul>
-<li>Fileboard</li>
-<li>CloudPull</li>
-<li>Remail</li>
-<li>Notify</li>
-<li>FwdMail</li>
-<li>eMailGanizer</li>
-<li>OneMail</li>
-<li>MailArchive</li>
-<li>iPhoto2Gmail</li>
-</ul>
-
-<h2 id="consulting">Consulting</h2>
-
-<p>Consulting services are available via <a href="http://www.centralatomics.com">Central Atomics</a>. At Central Atomics we have over 10 years of experience developing for Apple platforms and 6 years of experience working with e-mail systems. If you need custom e-mail functionality developed, please get in touch via our website or e-mail Matt directly. </p>
-
-<h2 id="contact">Contact</h2>
-
-<p>If you have any questions please don&#8217;t hestitate to contact me at <a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#109;&#x72;&#111;&#110;&#103;&#x65;&#64;&#109;&#114;&#x6f;&#x6e;&#103;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#x6d;&#114;&#111;&#110;&#x67;&#x65;&#64;&#x6d;&#x72;&#x6f;&#x6e;&#x67;&#101;&#x2e;&#99;&#x6f;&#x6d;</a> or on Twitter at <a href="http:www.twitter.com/mronge">@mronge</a>. </p>
-
-<p>Thanks, </p>
-
-<p>Matt Ronge</p>
+<p>And that&#8217;s all there is to it.</p>
     </div>
 </body>
 </html>

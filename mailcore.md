@@ -7,16 +7,22 @@ MailCore is a Mac/iOS framework for working with the e-mail protocols IMAP and S
 
 ## Summary
 
+* [What is MailCore?][whatis]
 * [Getting the Code][gettingcode]
 * [Adding MailCore to Your iOS Project][iosadding]
 * [Adding MailCore to Your Mac Project][macadding]
 * [Migrating to Version 1.0][migrating]
 * [Documentation][docs]
+* [Mailing List][mailinglist]
 * [Apps Using MailCore][apps]
 * [Consulting][consulting]
 * [Contact][contact]
 
 ***
+
+## What is MailCore? [whatis]
+
+MailCore is a Mac and iOS framework designed to ease the pain of dealing with e-mail protocols. MailCore makes the process of sending e-mail easy by hiding the nasty details like MIME composition from you. Instead, there is a nice interface for composing messages and then there is a single method required to send the message. Checking e-mail on an IMAP server is a more complex beast, but MailCore makes the job much simpler but presenting everything as a set of abstract objects like Messages, Folders and Accounts.
 
 ## Getting the Code [gettingcode]
 
@@ -74,7 +80,13 @@ Here are a list of major changes:
 
 ## Documentation [docs]
 
-Take a look at the [API docs](api/index.html).
+Begin with the [Getting Started Guide](gettingstarted.html) and then take a look at the [API docs](api/index.html).
+
+## Mailing List [mailinglist]
+
+There is a low traffic mailing list hosted on [Librelist](http://librelist.com/).
+
+To join send an email to <mailcore@librelist.com> and reply to the confirmation e-mail. To unsubscribe at anytime send an e-mail to <mailcore-unsubscribe@librelist.com>.
 
 ## Apps Using MailCore [apps]
 
