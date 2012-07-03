@@ -44,13 +44,18 @@ git submodule update --init
    CFNetwork.framework
 ~~~~~ 
 ![libraries](images/libraries.png)   
-4. Under you app's target switch to Build Settings. Locate "Header Search Paths" in the Build Settings and add `../MailCore/include` Note: This assumes that the MailCore project has been checked out into a folder next to your project.
+4. Under your app's target, switch to Build Settings. Locate "Header Search Paths" in the Build Settings and add `../MailCore/include` Note: This assumes that the MailCore project has been checked out into a folder next to your project.
 ![buildsettings](images/buildsettings.png)
 5. You are now ready to use MailCore. To use MailCore add `#import <MailCore/MailCore.h>` to the top of your Objective-C files.
 
 ##  Adding MailCore to Your Mac Project [macadding]
 
-TODO
+1. First checkout the latest code and make sure you get the required submodules
+2. Locate MailCore.xcodeproj and add it to your project as a subproject. You can do this by dragging the Mailcore.xcodeproj file into your Xcode project.
+3. Navigate to your app's target and switch to your app's Build Phases. Once in Build Phases expand "Link Binary With Libraries" and click the + button. From there add MailCore.framework.
+4. While still under Build Phases click "Add Build Phase" in the lower right and select "Add Copy Files". A new copy files phase will be added, make sure the destination is set to "Frameworks". Now add MailCore.framework to that copy files phase by using the + button.
+4. Under your app's target, switch to Build Settings. Locate "Header Search Paths" in the Build Settings and add `../MailCore/include` Note: This assumes that the MailCore project has been checked out into a folder next to your project.
+5. You are now ready to use MailCore. To use MailCore add `#import <MailCore/MailCore.h>` to the top of your Objective-C files.
 
 ## Migrating to Version 1.0 [migrating]
 
