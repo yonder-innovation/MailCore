@@ -20,7 +20,7 @@ MailCore is a Mac/iOS framework for working with the e-mail protocols IMAP and S
 
 ## Getting the Code [gettingcode]
 
-The best way to get MailCore is to clone directly from GitHub. The master branch is under active development but it is still the recommended place to start. Eventually a stable version will be tagged 1.0, but for now work off master.
+The best way to get MailCore is to clone directly from [GitHub](http://www.github.com/mronge/MailCore/). The master branch is under active development but it is still the recommended place to start. Eventually a stable version will be tagged 1.0, but for now work off master.
 
 ~~~~~bash
 git clone https://github.com/mronge/MailCore.git
