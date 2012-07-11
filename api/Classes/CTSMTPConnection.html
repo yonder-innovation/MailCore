@@ -42,6 +42,8 @@
 	
 	<option value="class_methods">Class Methods</option>
 	
+	<option value="//api/name/canConnectToServer:username:password:port:useTLS:useAuth:error:">&nbsp;&nbsp;&nbsp;&nbsp;+ canConnectToServer:username:password:port:useTLS:useAuth:error:</option>
+	
 	<option value="//api/name/sendMessage:server:username:password:port:useTLS:useAuth:error:">&nbsp;&nbsp;&nbsp;&nbsp;+ sendMessage:server:username:password:port:useTLS:useAuth:error:</option>
 	
 	
@@ -71,6 +73,8 @@
 
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/canConnectToServer:username:password:port:useTLS:useAuth:error:">canConnectToServer:username:password:port:useTLS:useAuth:error:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/sendMessage:server:username:password:port:useTLS:useAuth:error:">sendMessage:server:username:password:port:useTLS:useAuth:error:</a></span></li>
 	
@@ -113,11 +117,9 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<pre><code>@class  CTSMTPConnection
-This is not a class you instantiate! It has only one class method, and that is all you need to send e-mail.
-First use CTCoreMessage to compose an e-mail and then pass the e-mail to the method sendMessage: with
-the necessary server settings and CTSMTPConnection will send the message.
-</code></pre>
+						<p>This is not a class you instantiate! It has only two class methods, and that is all you need to send e-mail.
+First use <a href="../Classes/CTCoreMessage.html">CTCoreMessage</a> to compose an e-mail and then pass the e-mail to the method sendMessage: with
+the necessary server settings and CTSMTPConnection will send the message.</p>
 					</div>
 					
 					
@@ -136,8 +138,14 @@ the necessary server settings and CTSMTPConnection will send the message.
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/sendMessage:server:username:password:port:useTLS:useAuth:error:">+&nbsp;sendMessage:server:username:password:port:useTLS:useAuth:error:</a></code>
-		<span class="tooltip"><pre><code>    This method...it sends e-mail.
-</code></pre></span>
+		<span class="tooltip"><p>This method&hellip;it sends e-mail.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/canConnectToServer:username:password:port:useTLS:useAuth:error:">+&nbsp;canConnectToServer:username:password:port:useTLS:useAuth:error:</a></code>
+		<span class="tooltip"><p>Use this method to test the user&rsquo;s credentials.</p></span>
 	</span>
 	
 	
@@ -157,14 +165,101 @@ the necessary server settings and CTSMTPConnection will send the message.
 						<h2 class="subtitle subtitle-methods">Class Methods</h2>
 						
 						<div class="section-method">
+	<a name="//api/name/canConnectToServer:username:password:port:useTLS:useAuth:error:" title="canConnectToServer:username:password:port:useTLS:useAuth:error:"></a>
+	<h3 class="subsubtitle method-title">canConnectToServer:username:password:port:useTLS:useAuth:error:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Use this method to test the user&rsquo;s credentials.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (BOOL)canConnectToServer:(NSString *)<em>server</em> username:(NSString *)<em>username</em> password:(NSString *)<em>password</em> port:(unsigned int)<em>port</em> useTLS:(BOOL)<em>tls</em> useAuth:(BOOL)<em>auth</em> error:(NSError **)<em>error</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>server</em></dt>
+			<dd><p>The server address</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>username</em></dt>
+			<dd><p>The username, if there is none then pass in an empty string. For some servers you may have to specify the username as username@domain</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>password</em></dt>
+			<dd><p>The password, if there is none then pass in an empty string.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>port</em></dt>
+			<dd><p>The port to use, the standard port is 25</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>tls</em></dt>
+			<dd><p>Pass in YES, if you want to use SSL/TLS</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>auth</em></dt>
+			<dd><p>Pass in YES if you would like to use SASL authentication</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>error</em></dt>
+			<dd><p>Will contain an error when the method returns NO</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>Returns YES on success, NO on error</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Use this method to test the user&rsquo;s credentials.</p>
+
+<p>This is useful for account setup. You can have the user enter in their credentials and then verify they work without sending a message.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">CTSMTPConnection.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/sendMessage:server:username:password:port:useTLS:useAuth:error:" title="sendMessage:server:username:password:port:useTLS:useAuth:error:"></a>
 	<h3 class="subsubtitle method-title">sendMessage:server:username:password:port:useTLS:useAuth:error:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<pre><code>    This method...it sends e-mail.
-</code></pre>
+		<p>This method&hellip;it sends e-mail.</p>
 	</div>		
 	
     
@@ -231,8 +326,7 @@ the necessary server settings and CTSMTPConnection will send the message.
 	
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
-		<pre><code>    This method...it sends e-mail.
-</code></pre>
+		<p>This method&hellip;it sends e-mail.</p>
 	</div>
 	
 	
@@ -264,7 +358,7 @@ the necessary server settings and CTSMTPConnection will send the message.
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2012 Central Atomics Inc.. All rights reserved. (Last updated: 2012-07-03)</span><br />
+						<p><span class="copyright">&copy; 2012 Central Atomics Inc.. All rights reserved. (Last updated: 2012-07-11)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 789)</a>.</span></p>
 						
