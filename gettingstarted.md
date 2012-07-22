@@ -16,7 +16,7 @@ Sending e-mail with MailCore is very easy, it takes care of all the details like
 Once the message attributes have been set, all that is left is sending the message using `CTSMTPConnection`:
     
     NSError *error;
-    BOOL success = [CTSMTPConnection sendMessage:testMsg server:@"mail.test.com" username:@"test" password:@"test" port:25 useTLS:YES shouldAuth:YES error:&error];
+    BOOL success = [CTSMTPConnection sendMessage:testMsg server:@"mail.test.com" username:@"test" password:@"test" port:25 useTLS:YES useAuth:YES error:&error];
     if (!success) {
         // Present the error
     }
