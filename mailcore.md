@@ -52,9 +52,10 @@ git submodule update --init
    libiconv.dylib
    CFNetwork.framework
 ~~~~~ 
-![libraries](images/libraries.png)   
-4. Under your app's target, switch to Build Settings. Locate "Header Search Paths" in the Build Settings and add `"$(BUILT_PRODUCTS_DIR)/../../include"`
-5. You are now ready to use MailCore. To use MailCore add `#import <MailCore/MailCore.h>` to the top of your Objective-C files.
+![libraries](images/libraries.png)
+4. Add "MailCore iOS" under "Target Dependencies"
+5. Under your app's target, switch to Build Settings. Locate "Header Search Paths" in the Build Settings and add `"$(BUILT_PRODUCTS_DIR)/../../include"`
+6. You are now ready to use MailCore. To use MailCore add `#import <MailCore/MailCore.h>` to the top of your Objective-C files.
 
 ##  Adding MailCore to Your Mac Project [macadding]
 
@@ -62,7 +63,8 @@ git submodule update --init
 2. Locate MailCore.xcodeproj and add it to your project as a subproject. You can do this by dragging the Mailcore.xcodeproj file into your Xcode project.
 3. Navigate to your app's target and switch to your app's Build Phases. Once in Build Phases expand "Link Binary With Libraries" and click the + button. From there add MailCore.framework.
 4. While still under Build Phases click "Add Build Phase" in the lower right and select "Add Copy Files". A new copy files phase will be added, make sure the destination is set to "Frameworks". Now add MailCore.framework to that copy files phase by using the + button.
-4. You are now ready to use MailCore. To use MailCore add `#import <MailCore/MailCore.h>` to the top of your Objective-C files.
+5. Add "MailCore" under "Target Dependencies"
+6. You are now ready to use MailCore. To use MailCore add `#import <MailCore/MailCore.h>` to the top of your Objective-C files.
 
 ## Migrating to Version 1.0 [migrating]
 
@@ -87,7 +89,8 @@ Begin with the [Getting Started Guide](gettingstarted.html) and then take a look
 
 There is a low traffic mailing list hosted on [Librelist](http://librelist.com/).
 
-To join send an email to <mailcore@librelist.com> and reply to the confirmation e-mail. To unsubscribe at anytime send an e-mail to <mailcore-unsubscribe@librelist.com>.
+* To join send an email to <mailcore@librelist.com> and reply to the confirmation e-mail. To unsubscribe at anytime send an e-mail to <mailcore-unsubscribe@librelist.com>.
+* Mailing list archives are [available.](http://librelist.com/browser/mailcore/)
 
 ## Apps Using MailCore [apps]
 
