@@ -62,7 +62,8 @@ You'll also note that each method takes fetch attributes, that controls what is 
 Now that we have a message list we can grab the first message and download the message body:
 
     CTCoreMessage *msg = [messages objectAtIndex:0];
-    NSString *body = [msg bodyPreferringPlainText];
+    BOOL isHTML;
+    NSString *body = [msg bodyPreferringPlainText:&isHTML];
     
 And that's all there is to it.
 

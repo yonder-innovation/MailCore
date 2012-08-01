@@ -44,7 +44,7 @@ git submodule update --init
 ![subproject](images/subproject.png)
 3. Navigate to your app's target and switch to your app's Build Phases. Once in Build Phases expand "Link Binary With Libraries" and click the + button. And add these libraries:
 
-~~~~~
+~~~~~text
    libmailcore.a
    libssl.a
    libsasl2.a
