@@ -3,9 +3,6 @@
 # MailCore
 MailCore is a Mac/iOS framework for working with the e-mail protocols IMAP and SMTP
 
-<iframe src="http://markdotto.github.com/github-buttons/github-btn.html?user=mronge&repo=MailCore&type=watch&count=true"
-  allowtransparency="true" frameborder="0" scrolling="0" width="110px" height="20px"></iframe>
-
 ***
 
 ## Summary
