@@ -45,6 +45,8 @@
 
 @implementation CTCoreMessage
 @synthesize mime=myParsedMIME, lastError, parentFolder;
+@synthesize filteredBody;
+@synthesize filteredAttachments;
 
 - (id)init {
     [super init];
@@ -95,6 +97,12 @@
     }
     self.lastError = nil;
     self.parentFolder = nil;
+    if (self.filteredAttachments) {
+        self.filteredAttachments = nil;
+    }
+    if (self.filteredBody) {
+        self.filteredBody = nil;
+    }
     [myParsedMIME release];
     [super dealloc];
 }

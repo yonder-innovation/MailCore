@@ -49,6 +49,8 @@
     NSUInteger mySequenceNumber;
     NSError *lastError;
     CTCoreFolder *parentFolder;
+    NSString *filteredBody;
+    NSArray *filteredAttachments;
 }
 /**
  If an error occurred (nil or return of NO) call this method to get the error
@@ -56,6 +58,10 @@
 @property (nonatomic, retain) NSError *lastError;
 
 @property (nonatomic, retain) CTCoreFolder *parentFolder;
+
+@property (nonatomic, retain) NSString *filteredBody;
+
+@property (nonatomic, retain) NSArray *filteredAttachments;
 
 /**
  If the body structure has been fetched, this will contain the MIME structure
