@@ -66,6 +66,7 @@
             goto error;
         }
     }
+    
     if (auth) {
         success = [smtpObj authenticateWithUsername:username password:password server:server];
         if (!success) {
